@@ -1,12 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import Home from './Components/Home/Home';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import Signin from './Components/Signin/Signin';
+import Signup from './Components/Signup/Signup';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <SafeAreaProvider>
+        <SafeAreaView edges={['top','bottom']} style={{ flex: 1}}>
+          <StatusBar translucent={true} backgroundColor={'white'} barStyle='dark-content' />
+          <Signup/>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </>
   );
 }
 
