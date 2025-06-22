@@ -68,5 +68,19 @@ export const SignStyles = StyleSheet.create({
         textAlign:'center',
         marginTop:10,
         color:'#78828A'
+    },
+    guestmode:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center',
+        height:40
+    },
+    guestModeText:{
+        fontWeight:500,
+        color:'#2853AF',
+        textTransform:'capitalize',
+        fontSize:14,
+        textDecorationLine:'underline'
     }
 });
