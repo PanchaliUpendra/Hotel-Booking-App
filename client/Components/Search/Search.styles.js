@@ -13,5 +13,15 @@ export const SearchStyles = StyleSheet.create({
         fontSize:16,
         fontWeight:500,
         color:'black'
+    },
+    searchBarCon:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        borderWidth:1,
+        borderColor:'#E9EBED',
+        borderRadius:30,
+        paddingLeft:10,
+        paddingRight:10
     }
 });
