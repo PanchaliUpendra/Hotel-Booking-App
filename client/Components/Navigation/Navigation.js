@@ -53,7 +53,20 @@ const HomeTabNavigator =()=>(
         options={{
             tabBarIcon:({focused})=>(
                 <MaterialIcons name="list-alt" size={22} color={focused?'#2854af':'#666666'}/>
-            )
+            ),
+            // headerShown:true,
+            // headerStyle:{
+            //     height:50,
+            //     backgroundColor:'white'
+            // },
+            // headerTitle:'My Bookings',
+            // headerTitleAlign:'center',
+            // headerTitleStyle:{
+            //     fontSize:14,
+            //     fontWeight:500,
+            //     marginTop:-30
+            // },
+            // headerTintColor:'black'
         }}/>
         <Tab.Screen name="Account" component={Profile}
         options={{
@@ -73,9 +86,18 @@ function Navigation(){
                 headerShown:false
             }}>
                 {/* onboarding screens */}
-                <Stack.Screen name="Onboardingone" component={Onboarding1}/>
-                <Stack.Screen name="Onboardingtwo" component={Onboarding2}/>
-                <Stack.Screen name="Onboardingthree" component={Onboarding3}/>
+                <Stack.Screen name="Onboardingone" component={Onboarding1} 
+                options={{
+                    animation:'slide_from_right'
+                }}/>
+                <Stack.Screen name="Onboardingtwo" component={Onboarding2}
+                options={{
+                    animation:'slide_from_right'
+                }}/>
+                <Stack.Screen name="Onboardingthree" component={Onboarding3}
+                options={{
+                    animation:'slide_from_right'
+                }}/>
 
                 {/* sign pages */}
                 <Stack.Screen name="Signin" component={Signin}/>
