@@ -14,6 +14,8 @@ import Profile from "../Profile/Profile";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import EachRestaurant from "../EachRestaurant/EachRestaurant";
+import { useSelector } from "react-redux";
 
 
 
@@ -79,13 +81,16 @@ const HomeTabNavigator =()=>(
 
 
 function Navigation(){
+    const isAuthed = useSelector(state => state.userdata.isAuthed);
     return(
         <>
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{
+            <Stack.Navigator initialRouteName={isAuthed?'Dashboard':'Signin'} screenOptions={{
                 headerShown:false
             }}>
                 {/* onboarding screens */}
+                {!isAuthed &&
+                <>
                 <Stack.Screen name="Onboardingone" component={Onboarding1} 
                 options={{
                     animation:'slide_from_right'
@@ -102,9 +107,12 @@ function Navigation(){
                 {/* sign pages */}
                 <Stack.Screen name="Signin" component={Signin}/>
                 <Stack.Screen name="Signup" component={Signup}/>
+                </>
+}
 
                 {/* tabs */}
                 <Stack.Screen name="Dashboard" component={HomeTabNavigator}/>
+                <Stack.Screen name="Eachrestaurant" component={EachRestaurant} />
             </Stack.Navigator>
         </NavigationContainer>
         </>

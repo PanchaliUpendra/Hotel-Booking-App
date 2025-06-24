@@ -9,6 +9,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 // import Onboarding3 from './Components/Onboarding/Onboarding3';
 // import Profile from './Components/Profile/Profile';
 import Navigation from './Components/Navigation/Navigation';
+import { Reduxprovider } from './Reduxstates/Reduxprovider';
 
 export default function App() {
   return (
@@ -16,7 +17,9 @@ export default function App() {
       <SafeAreaProvider>
         <SafeAreaView edges={['top','bottom']} style={{ flex: 1}}>
           <StatusBar translucent={true} backgroundColor={'white'} barStyle='dark-content' />
+          <Reduxprovider>
           <Navigation/>
+          </Reduxprovider>
         </SafeAreaView>
       </SafeAreaProvider>
     </>

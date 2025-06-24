@@ -28,10 +28,12 @@ function Home() {
                                 <Ionicons name="search" size={18} color={'black'} />
                             </View>
                         </TouchableOpacity>
-
+                        
+                        <TouchableOpacity activeOpacity={0.3} >
                         <View style={HomeStyles.profileNotify}>
                             <MaterialIcons name="notifications-none" size={18} color={'black'} />
                         </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
 
@@ -53,7 +55,8 @@ function Home() {
                     }}>
                     {
                         Hotels.filter((item) => item.divided === 'mostpopular').map((htlitem, idx) => (
-                            <ImageBackground key={idx} source={htlitem.image} style={HomeStyles.popularEach} >
+                            <TouchableOpacity activeOpacity={0.8} key={idx} onPress={()=>navigation.navigate('Eachrestaurant',{id:htlitem.id})}>
+                            <ImageBackground  source={htlitem.image} style={HomeStyles.popularEach} >
                                 <View style={HomeStyles.popularEachInner}>
 
                                     <Text style={HomeStyles.popularHtlName}>{htlitem.name}</Text>
@@ -67,6 +70,7 @@ function Home() {
                                     <Ionicons size={20} color={'white'} name="heart-circle" style={HomeStyles.popularWishlist} />
                                 </View>
                             </ImageBackground>
+                            </TouchableOpacity>
                         ))
                     }
                 </ScrollView>
