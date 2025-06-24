@@ -7,59 +7,69 @@ import Displayloading from "../Common/Displayloading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { storeUserData } from "../../Reduxstates/Userdata";
+import { CommonActions } from '@react-navigation/native';
+import Feather from 'react-native-vector-icons/Feather';
+import { RestStyles } from "../EachRestaurant/EachRestaurant.styles";
+
 
 function Signup() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const [showloading , setShowloading] = useState(false);
-    const [userData,setUserData] = useState({
-        email:'',
-        password:'',
-        confirmpassword:'',
-        name:''
+    const [showloading, setShowloading] = useState(false);
+    const [userData, setUserData] = useState({
+        email: '',
+        password: '',
+        confirmpassword: '',
+        name: ''
     });
 
-    async function registerUser(){
+    async function registerUser() {
         setShowloading(true);
-        try{
-            if(userData.email!=='' && userData.password!=='' && userData.confirmpassword!=='' && userData.password===userData.confirmpassword && userData.name!==''){
-            const abortCon = new AbortController();
-            const abortTime = setTimeout(()=>abortCon.abort(),10000);
-            const response = await fetch(`${API_URL}/users/registeruser`,{
-                method:'POST',
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    ...userData
-                }),
-                signal:abortCon.signal
-            });
-            clearTimeout(abortTime);
-            const resData = await response.json();
-            if(resData.success){
-                await AsyncStorage.setItem('token',resData.token);
-                dispatch(storeUserData({
-                    isAuthed: false,
-                    uid: resData.user.user_id,
-                    name: resData.user.user_name,
-                    email: resData.user.user_email,
-                }))
-                // Alert.alert(resData.message);
-            }else{
-                Alert.alert(resData.message);
+        try {
+            if (userData.email !== '' && userData.password !== '' && userData.confirmpassword !== '' && userData.password === userData.confirmpassword && userData.name !== '') {
+                const abortCon = new AbortController();
+                const abortTime = setTimeout(() => abortCon.abort(), 10000);
+                const response = await fetch(`${API_URL}/users/registeruser`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        ...userData
+                    }),
+                    signal: abortCon.signal
+                });
+                clearTimeout(abortTime);
+                const resData = await response.json();
+                if (resData.success) {
+                    await AsyncStorage.setItem('token', resData.token);
+                    dispatch(storeUserData({
+                        isAuthed: true,
+                        uid: resData.user.user_id,
+                        name: resData.user.user_name,
+                        email: resData.user.user_email,
+                    }))
+                    // Alert.alert(resData.message);
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [{ name: 'Dashboard' }], // Replace 'Home' with your target screen name
+                        })
+                    );
+                } else {
+                    Alert.alert(resData.message);
+                }
+            } else {
+                if (userData.password !== userData.confirmpassword) {
+                    Alert.alert('password and confirm password should be same');
+                } else {
+                    Alert.alert('please fill the required fields');
+                }
             }
-        }else{
-            if(userData.password!==userData.confirmpassword){
-                Alert.alert('password and confirm password should be same');
-            }else{
-                Alert.alert('please fill the required fields');
-            }
-        }
-        }catch(err){
-            console.log('getting an error while register ing the user',err.message);
+        } catch (err) {
+            console.log('getting an error while register ing the user', err.message);
             Alert.alert(err.message);
-        }finally{
+        } finally {
             setShowloading(false);
         }
     }
@@ -69,7 +79,12 @@ function Signup() {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // adjust for platform
                 style={{ flex: 1, backgroundColor: 'white' }}
             >
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1,position:'relative' }}>
+                    <TouchableOpacity activeOpacity={0.4} onPress={() => navigation.goBack()} style={[RestStyles.backbutton,{backgroundColor:'rgba(0,0,0,0.1)'}]}>
+                        <View >
+                            <Feather name="chevron-left" size={20} color={'black'} />
+                        </View>
+                    </TouchableOpacity>
                     <View style={SignStyles.SignCon}>
                         <Text style={SignStyles.SignHead}>Create Account</Text>
                         <Text style={SignStyles.SignHeadTag}>Lorem ipsum dolor sit amet, consectetur</Text>
@@ -77,45 +92,45 @@ function Signup() {
                         <View style={SignStyles.SignLabelCon}>
                             <Text style={SignStyles.SignLabel}>Full Name</Text>
                             <TextInput placeholder="Enter your name" multiline={false} numberOfLines={1} style={SignStyles.SignInput}
-                            value={userData.name}
-                            onChangeText={(text)=>setUserData(prev=>({
-                                ...prev,
-                                name:text
-                            }))}
+                                value={userData.name}
+                                onChangeText={(text) => setUserData(prev => ({
+                                    ...prev,
+                                    name: text
+                                }))}
                             />
                         </View>
 
                         <View style={SignStyles.SignLabelCon}>
                             <Text style={SignStyles.SignLabel}>E-mail</Text>
-                            <TextInput placeholder="Enter your email" secureTextEntry={true} multiline={false} numberOfLines={1} style={SignStyles.SignInput}
-                            value={userData.email}
-                            onChangeText={(text)=>setUserData(prev=>({
-                                ...prev,
-                                email:text
-                            }))} />
+                            <TextInput placeholder="Enter your email" multiline={false} numberOfLines={1} style={SignStyles.SignInput}
+                                value={userData.email}
+                                onChangeText={(text) => setUserData(prev => ({
+                                    ...prev,
+                                    email: text
+                                }))} />
                         </View>
 
                         <View style={SignStyles.SignLabelCon}>
                             <Text style={SignStyles.SignLabel}>Password</Text>
                             <TextInput placeholder="Enter your Password" secureTextEntry={true} multiline={false} numberOfLines={1} style={SignStyles.SignInput}
-                            value={userData.password}
-                            onChangeText={(text)=>setUserData(prev=>({
-                                ...prev,
-                                password:text
-                            }))} />
+                                value={userData.password}
+                                onChangeText={(text) => setUserData(prev => ({
+                                    ...prev,
+                                    password: text
+                                }))} />
                         </View>
 
                         <View style={SignStyles.SignLabelCon}>
                             <Text style={SignStyles.SignLabel}>Confirm Password</Text>
-                            <TextInput placeholder="Enter Confirm Password" secureTextEntry={true} multiline={false} numberOfLines={1} style={SignStyles.SignInput} 
-                            value={userData.confirmpassword}
-                            onChangeText={(text)=>setUserData(prev=>({
-                                ...prev,
-                                confirmpassword:text
-                            }))}/>
+                            <TextInput placeholder="Enter Confirm Password" secureTextEntry={true} multiline={false} numberOfLines={1} style={SignStyles.SignInput}
+                                value={userData.confirmpassword}
+                                onChangeText={(text) => setUserData(prev => ({
+                                    ...prev,
+                                    confirmpassword: text
+                                }))} />
                         </View>
 
-                        <TouchableOpacity activeOpacity={0.6} style={{ width: '100%' }} onPress={()=>registerUser()}>
+                        <TouchableOpacity activeOpacity={0.6} style={{ width: '100%' }} onPress={() => registerUser()}>
                             <View style={SignStyles.SignBtn}>
                                 <Text style={SignStyles.SignBtnText}>Sign Up</Text>
                             </View>
@@ -126,12 +141,12 @@ function Signup() {
                     </View>
                 </ScrollView>
                 <View style={SignStyles.guestmode}>
-                    <TouchableOpacity activeOpacity={0.4} onPress={()=>navigation.navigate('Dashboard',{screen:'Home'})}>
+                    <TouchableOpacity activeOpacity={0.4} onPress={() => navigation.navigate('Dashboard', { screen: 'Home' })}>
                         <Text style={SignStyles.guestModeText}>Try Guest Mode!!</Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
-            {showloading && <Displayloading/>}
+            {showloading && <Displayloading />}
         </>
     );
 }

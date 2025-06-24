@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SignStyles } from "./Sign.styles";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { API_URL } from "../../Data/Hotels";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { storeUserData } from "../../Reduxstates/Userdata";
+import Displayloading from "../Common/Displayloading";
 
 function Signin() {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const [showloading, setShowloading] = useState(true);
+    const [showloading, setShowloading] = useState(false);
     const [userData, setUserdata] = useState({
         email: '',
         password: ''
@@ -42,10 +43,16 @@ function Signin() {
                         name: resData.user.user_name,
                         email: resData.user.user_email,
                     }));
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [{ name: 'Dashboard' }], // Replace 'Home' with your target screen name
+                        })
+                    );
                 } else {
                     Alert.alert(resData.message);
                 }
-            }else{
+            } else {
                 Alert.alert('Please fill the Require fields!!');
             }
         } catch (err) {
@@ -100,7 +107,9 @@ function Signin() {
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
+            {showloading && <Displayloading />}
         </>
+
     );
 }
 

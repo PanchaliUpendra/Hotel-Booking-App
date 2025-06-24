@@ -6,10 +6,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 function Home() {
     const navigation = useNavigation();
     const [rhotel, setrHotel] = useState('All');
+    const isAuthed = useSelector(state=>state.userdata.isAuthed);
+    const username = useSelector(state=>state.userdata.name);
     return (
         <>
             <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}>
@@ -19,7 +22,7 @@ function Home() {
                     <TouchableOpacity activeOpacity={0.4} onPress={()=>navigation.navigate('Account')}>
                     <View style={HomeStyles.profileNameCon}>
                         <Image source={require('../../Images/Profile/profile.png')} style={{ width: 50, height: 50, resizeMode: 'cover' }} />
-                        <Text style={HomeStyles.HomeTopicTextOne}>panchali upendra</Text>
+                        <Text style={HomeStyles.HomeTopicTextOne}>{isAuthed?username:'Guest User'}</Text>
                     </View>
                     </TouchableOpacity>
                     <View style={HomeStyles.profileNameCon}>
@@ -98,7 +101,8 @@ function Home() {
                 {
                     Hotels.filter(itm => itm.type === rhotel).length > 0 ?
                         Hotels.filter(itm => itm.type === rhotel).map((htl, idx) => (
-                            <View key={idx} style={HomeStyles.recomEachCon}>
+                            <TouchableOpacity activeOpacity={0.8} key={idx} onPress={()=>navigation.navigate('Eachrestaurant',{id:htl.id})}>
+                            <View style={HomeStyles.recomEachCon}>
                                 <View style={HomeStyles.recomImgName}>
                                     <Image source={htl.image} style={{ width: 60, height: 60, borderRadius: 5, resizeMode: 'cover' }} />
                                     <View>
@@ -111,9 +115,11 @@ function Home() {
                                     <Text style={[HomeStyles.popularpriceText, { color: 'black', marginTop: 7 }]}><Text style={{ color: '#EDB900', fontSize: 14 }}>★</Text>{htl.rating}</Text>
                                 </View>
                             </View>
+                            </TouchableOpacity>
                         )) :
                         Hotels.slice(0, 3).map((htl, idx) => (
-                            <View key={idx} style={HomeStyles.recomEachCon}>
+                            <TouchableOpacity activeOpacity={0.8} key={idx} onPress={()=>navigation.navigate('Eachrestaurant',{id:htl.id})}>
+                            <View  style={HomeStyles.recomEachCon}>
                                 <View style={HomeStyles.recomImgName}>
                                     <Image source={htl.image} style={{ width: 60, height: 60, borderRadius: 5, resizeMode: 'cover' }} />
                                     <View>
@@ -126,6 +132,7 @@ function Home() {
                                     <Text style={[HomeStyles.popularpriceText, { color: 'black', marginTop: 7 }]}><Text style={{ color: '#EDB900', fontSize: 14 }}>★</Text>{htl.rating}</Text>
                                 </View>
                             </View>
+                            </TouchableOpacity>
                         ))
                 }
 
@@ -140,7 +147,8 @@ function Home() {
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10, paddingHorizontal: 15 }}>
                     {
                         Hotels.filter((item) => item.divided === 'besttodaytop').map((htl, idx) => (
-                            <View key={idx} style={[HomeStyles.recomEachCon, { width: 250, borderWidth: 1, borderColor: '#E9EBED' }]}>
+                        <TouchableOpacity activeOpacity={0.8} key={idx} onPress={()=>navigation.navigate('Eachrestaurant',{id:htl.id})}>
+                            <View style={[HomeStyles.recomEachCon, { width: 250, borderWidth: 1, borderColor: '#E9EBED' }]}>
                                 <View style={HomeStyles.recomImgName}>
                                     <Image source={htl.image} style={{ width: 60, height: 60, borderRadius: 5, resizeMode: 'cover' }} />
                                     <View>
@@ -150,13 +158,15 @@ function Home() {
                                     </View>
                                 </View>
                             </View>
+                        </TouchableOpacity>
                         ))
                     }
                 </ScrollView>
 
                 {
                     Hotels.filter((item) => item.divided === 'besttoday').map((htl, idx) => (
-                        <View key={idx} style={HomeStyles.bestTopCon}>
+                        <TouchableOpacity activeOpacity={0.8} key={idx} onPress={()=>navigation.navigate('Eachrestaurant',{id:htl.id})}>
+                        <View style={HomeStyles.bestTopCon}>
                             <Image source={htl.image} style={{ width: '100%', height: 170, resizeMode: 'cover', borderRadius: 10 }} />
                             <View style={HomeStyles.bestHotelNameCon}>
                                 <View>
@@ -170,6 +180,7 @@ function Home() {
                                 </View>
                             </View>
                         </View>
+                        </TouchableOpacity>
                     ))
                 }
 

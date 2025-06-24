@@ -85,7 +85,7 @@ function Navigation(){
     return(
         <>
         <NavigationContainer>
-            <Stack.Navigator initialRouteName={isAuthed?'Dashboard':'Signin'} screenOptions={{
+            <Stack.Navigator initialRouteName={isAuthed?'Dashboard':'Onboardingone'} screenOptions={{
                 headerShown:false
             }}>
                 {/* onboarding screens */}

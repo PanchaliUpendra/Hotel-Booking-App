@@ -90,5 +90,40 @@ export const RestStyles = StyleSheet.create({
         position:'absolute',
         left:10,
         top:10
+    },
+    //common facilitites
+    comCon:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        gap:25,
+        // justifyContent:'center'
+    },
+    comConEach:{
+        width:45,
+        height:45,
+        borderRadius:'50%',
+        backgroundColor:'#E8F2FF',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    comConEachInner:{
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    comConText:{
+        fontSize:11,
+        color:'grey',
+        textTransform:'capitalize'
+    },
+    description:{
+        fontSize:14,
+        fontWeight:400,
+        color:'#A3A3A3',
+        lineHeight:20
     }
 });
