@@ -1,4 +1,4 @@
-export const API_URL='http://192.168.1.12:8000';
+export const API_URL='https://hotel-booking-app-363085140246.asia-south1.run.app';
 
 export const Hotels = [
   {
