@@ -125,5 +125,25 @@ export const RestStyles = StyleSheet.create({
         fontWeight:400,
         color:'#A3A3A3',
         lineHeight:20
+    },
+
+    //days selection
+    daysSelect:{
+        width:'90%',
+        minHeight:100,
+        backgroundColor:'white',
+        padding:10,
+        borderRadius:5
+    },
+    daysText:{
+        fontSize:14,
+        color:'black',
+        textTransform:'capitalize'
+    },
+    daysInput:{
+        backgroundColor:'#e6e6e6',
+        borderRadius:5,
+        paddingLeft:5,
+        marginTop:3
     }
 });

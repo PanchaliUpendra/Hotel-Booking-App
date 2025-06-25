@@ -1,4 +1,4 @@
-export const API_URL='http://192.168.211.52:8000';
+export const API_URL='http://192.168.1.12:8000';
 
 export const Hotels = [
   {
